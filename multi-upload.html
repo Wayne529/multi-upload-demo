@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>多图片上传</title>
+	<script src="js/mobile-util.js"></script>
+	<link rel="stylesheet" href="css/style.css" />	
+</head>
+<body>
+	<div class="head">
+		<span class="return"></span>
+		上传图片
+	</div>
+	<div class="content">
+		<div class="info">
+			<div class="warm-tips">提供12张以内高清照片，每张200KB以上</div>
+			<!-- 上传图片容器 -->
+			<div class="upload-container">
+				<div class="item add" id="picker"></div>
+<!-- 				<div class="item" style="background-image:url('http://p2.image.hiapk.com/uploads/allimg/150504/7730-1505041H005-50.jpg'); ">
+	<div class="warn-wrap">
+		<span class="warn-icon"></span>
+		<p>上传失败</p>
+	</div>
+	<span class="del-btn js-del-img"></span>
+	<div class="progress-wrap">
+		<div class="progress">
+			<div class="progress-bar"></div>
+		</div>		
+	</div>
+</div> -->
+			</div>
+			<!-- 上传图片容器end -->
+		</div>
+	</div>	
+	<div class="foot">
+		<button class="btn big-btn">保存</button>			
+	</div>
+<script src="js/jquery-2.1.4.min.js"></script>
+<script src="js/webuploader.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		/**
+		 * mark:多图片上传
+		 * time: 2017/9/15
+		 * author: LiuWei
+		 */
+		//添加图片
+		function uploadImg(pickIdName){
+			//添加图片 
+		     var thumbnailWidth = 180;   //缩略图高度和宽度 （单位是像素），当宽高度是0~1的时候，是按照百分比计算，具体可以看api文档  
+		     var thumbnailHeight = 120; 
+		     var uploader = WebUploader.create({  
+		         // 选完文件后，是否自动上传。  
+		         auto: true,  
+		    
+		         // swf文件路径  
+		         swf: 'js/Uploader.swf',  
+		    
+		         // 文件接收服务端。  
+		         server: 'http://webuploader.duapp.com/server/fileupload.php',  
+		    
+		         // 选择文件的按钮。可选。  
+		         // 内部根据当前运行是创建，可能是input元素，也可能是flash.  
+		         pick: {
+		              id: pickIdName,
+		              multiple: false   //禁止多选，
+		         },  
+		    
+		         // 只允许选择图片文件。  
+		         accept: {  
+		             title: 'Images',  
+		             extensions: 'gif,jpg,jpeg,bmp,png',  
+		             mimeTypes: 'image/jpg,image/jpeg,image/png'  
+		         },
+		         // 上传时需要带的参数
+		         formData: {
+
+		         },
+		         //可重复上传图片，默认为false，设置为true则可重复上传
+		         duplicate: true,  
+		         method:'POST',  
+		     });   
+		      // 当有文件添加进来的时候  
+		     uploader.on( 'beforeFileQueued', function(){
+		     	 if($('#picker').siblings().length >= 12){
+		     	 	alert('最多只能上传12张图片')
+		     	 	return false;
+		     	 }
+		     	 
+		     });
+		     uploader.on( 'fileQueued', function( file ) {  // webuploader事件.当选择文件后，文件被加载到文件队列中，触发该事件。等效于 uploader.onFileueued = function(file){...} ，类似js的事件定义。  
+
+		         // 创建缩略图  
+		         // 如果为非图片文件，可以不用调用此方法。  
+		         // thumbnailWidth x thumbnailHeight 
+	         	var $li = $(
+							'<div class="item" id="'+ file.id +'">'+
+								'<span class="del-btn js-del-img"></span>'+
+							'</div>'		         		
+	         		);
+	         	$('.upload-container').append($li);
+		    
+		         uploader.makeThumb( file, function( error, src ) {  
+
+
+		       //   	var itemHtml = 	'<div class="item" style="background-image:url(\''+ src +'\'); ">'+
+									// 	'<span class="del-btn"></span>'+
+									// '</div>';
+					
+						 $li.css('background-image','url("'+ src +'")');
+		         }, thumbnailWidth, thumbnailHeight );  
+		     }); 
+
+		    //上传进度
+			uploader.on( 'uploadProgress', function( file, percentage ) {
+			    var $li = $( '#'+file.id ),
+			        $percent = $li.find('.progress .progress-bar');
+			        $li.find('.progress-wrap').show();
+
+			    // 避免重复创建
+			    if ( !$percent.length ) {
+			        $percent = $('<div class="progress-wrap"><div class="progress">'+
+						'<div class="progress-bar"></div>'+
+					'</div></div>').appendTo( $li ).find('.progress-bar');
+					$li.find('.progress').show();
+			    }
+
+			    $percent.css( 'width', percentage * 100 + '%' );
+			});
+
+
+		        // 文件上传成功，给item添加成功class, 用样式标记上传成功。  
+			 uploader.on( 'uploadSuccess', function( file ) {  
+			       //上传成功后的操作
+			      
+			 }); 
+
+			 uploader.on( 'uploadError', function( file ) {  
+			       //上传成功后的操作
+			      $('#'+ file.id).append('<div class="warn-wrap">'+
+						'<span class="warn-icon"></span>'+
+						'<p>上传失败</p>'+
+					'</div>').find('.progress-wrap').remove();
+
+			 }); 
+
+		}	
+
+		uploadImg('#picker');	
+
+		//删除图片事件绑定
+		$('.upload-container').on('click','.js-del-img',function(){
+			$(this).parents('.item').remove();
+		})	
+	})
+		
+</script>
+</body>
+</html>

@@ -1,0 +1,248 @@
+@charset "UTF-8";
+$ppr: 750px/16/1rem;
+
+*{
+    margin: 0;
+    padding: 0;
+    -webkit-text-size-adjust: none;
+    /* 禁用webkit内核浏览器的文字大小调整功能*/
+    -webkit-tap-highlight-color: rgba(0,0,0,0);    
+}
+
+html{
+    overflow: hidden;
+}
+
+body{
+    max-width: 800px/$ppr;
+    font-family: "微软雅黑";
+    background: #ebebeb;
+    margin: 0 auto;
+    height: 100%;
+    overflow: hidden;
+}
+
+ul,li{
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
+}
+
+/*去浮动*/
+@mixin clear{
+    content: '';
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    clear: both;
+}
+
+.head{
+    position: absolute;
+    top: 0;
+    z-index: 10;
+    height: 90px/$ppr;
+    line-height: 90px/$ppr;
+    width: 100%;
+    max-width: 800px/$ppr;
+    background: #fff;
+    box-shadow: 0 10px/$ppr 20px/$ppr rgba(0,0,0,.05);
+    font-size: 30px/$ppr;
+    text-align: center;
+    margin-bottom: 10px/$ppr;
+    .return{
+        width: 75px/$ppr;
+        height: 90px/$ppr;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: url(../images/return.png) center center no-repeat;
+        background-size: 15px/$ppr 28px/$ppr;
+    }
+    .btn{
+        width: 110px/$ppr;height: 50px/$ppr;
+        text-align: center;border:1px solid #e04f51;
+        font-size: 26px/$ppr;
+        display: inline-block;
+        position: absolute;
+        top: 20px/$ppr;
+        right: 30px/$ppr;
+        line-height: 50px/$ppr;
+        background: #ffe7e7;
+        border-radius: 10px/$ppr;
+        color: #e04f51;
+    }
+}
+
+.content{
+    position: absolute;
+    width: 100%;
+    max-width: 800px/$ppr;
+    height: 100%;
+    overflow-x:hidden;
+    overflow-y: scroll ;
+    .info{
+        margin-top: 120px/$ppr;
+        margin-bottom: 120px/$ppr;
+    }
+    .warm-tips{
+        font-size: 24px/$ppr;
+        color: #999;
+        padding:0 30px/$ppr;
+        line-height: 1.6;
+    }
+}
+
+.btn{
+    width: 180px/$ppr;
+    height: 60px/$ppr;
+    background: #fafafa;
+    border:1px solid #ebebeb;
+    font-size: 24px/$ppr;
+    color: #666;
+    margin: 0 10px/$ppr;
+    border-radius: 5px/$ppr;
+    &.big-btn{
+        width: 520px/$ppr;
+        height: 80px/$ppr;
+        line-height: 80px/$ppr;
+        text-align: center;
+        background: #e04f51;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin: -40px/$ppr 0 0 -260px/$ppr;        
+        color: #fff;
+        display: block;
+        border: none;
+        font-size: 26px/$ppr;
+        border-radius: 10px/$ppr;
+    }
+}
+
+.foot{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: #fff;
+    width: 100%;
+    height: 120px/$ppr;
+    .big-btn{
+
+    }
+}
+
+/*  图片上传 */
+.upload-container{
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    padding: 0 15px/$ppr;
+    //justify-content: center;
+    flex-wrap: wrap;
+    .item{
+        position: relative;
+        width: 200px/$ppr;
+        height: 200px/$ppr;
+        //background-color: #999;
+        margin: 15px/$ppr 20px/$ppr;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        &.add{
+            border: 2px/$ppr dashed #ccc;
+            box-sizing: border-box;
+            background-image: url("../images/add.png");
+            background-size: 90px/$ppr 90px/$ppr;
+            overflow: hidden;
+        }
+        .warn-wrap,.progress-wrap{
+            color: #fff;
+            font-size: 20px/$ppr;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: rgba(0,0,0,0.4);
+            flex-direction: column;
+            display: -webkit-flex; /* Safari */
+            display: flex; 
+            justify-content: center;
+            align-items: center;           
+            .warn-icon{
+                display: inline-block;
+                width: 42px/$ppr;
+                height: 42px/$ppr;
+                background: url("../images/warn.png") center no-repeat;
+                background-size: cover;
+            }
+            >p{
+                margin-top: 10px/$ppr;
+            }
+
+        }
+        .del-btn{
+            display: inline-block;
+            width: 32px/$ppr;
+            height: 32px/$ppr;
+            position: absolute;
+            top: 0;
+            right: 0;
+            background:rgba(0,0,0,0.4) url("../images/del.png") center no-repeat;
+            background-size: 11px/$ppr 11px/$ppr;
+            z-index: 6;
+        }
+        .progress{
+            display: none;
+            width: 170px/$ppr;
+            height: 12px/$ppr;
+/*             position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%); */
+            background-color: rgba(0,0,0,.4);
+            border-radius: 6px/$ppr;
+            overflow: hidden;
+            .progress-bar{
+                width: 0;
+                height: 100%;
+                background-color: #4ae24a;
+            }
+        }        
+
+    }
+}
+
+
+//webuploader样式
+.webuploader-container {
+    position: relative;
+}
+.webuploader-element-invisible {
+    position: absolute !important;
+    clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+    clip: rect(1px,1px,1px,1px);
+}
+.webuploader-pick {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    //background: #00b7ee;
+    //padding: 10px 15px;
+    color: #fff;
+    text-align: center;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+
+.webuploader-pick-disable {
+    opacity: 0.6;
+    pointer-events:none;
+}
+
+
