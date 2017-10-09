@@ -71,7 +71,7 @@
 		         accept: {  
 		             title: 'Images',  
 		             extensions: 'gif,jpg,jpeg,bmp,png',  
-		             mimeTypes: 'image/jpg,image/jpeg,image/png'  
+		             mimeTypes: 'image/*'   
 		         },
 		         // 上传时需要带的参数
 		         formData: {
@@ -131,8 +131,8 @@
 
 
 		        // 文件上传成功，给item添加成功class, 用样式标记上传成功。  
-			 uploader.on( 'uploadSuccess', function( file ) {  
-			       //上传成功后的操作
+			 uploader.on( 'uploadSuccess', function( file, response ) {  
+			       //上传成功后的操作,response为接口返回的数据
 			      
 			 }); 
 
