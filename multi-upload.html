@@ -79,12 +79,12 @@
 		         },
 		         //可重复上传图片，默认为false，设置为true则可重复上传
 		         duplicate: true,  
-		         method:'POST',  
+		         method:'POST'  
 		     });   
 		      // 当有文件添加进来的时候  
 		     uploader.on( 'beforeFileQueued', function(){
 		     	 if($('#picker').siblings().length >= 12){
-		     	 	alert('最多只能上传12张图片')
+		     	 	alert('最多只能上传12张图片');
 		     	 	return false;
 		     	 }
 		     	 
